@@ -14,7 +14,7 @@ namespace ConsoleApp1
 
     class Zoo
     {
-        private List<Animal> _animals = new List<Animal>();
+        private List<Animal> _aviarys = new List<Animal>();
 
         public void Work()
         {
@@ -23,8 +23,8 @@ namespace ConsoleApp1
 
             while (isWorking)
             {
-                Console.WriteLine($"Добро пажаловать в зоопарк, у нас есть {_animals.Count} вида животных, какой вы хотите посмотреть?");
-                Console.WriteLine($"Чтобы выйти нажмите {_animals.Count + 1}");
+                Console.WriteLine($"Добро пажаловать в зоопарк, у нас есть {_aviarys.Count} вальера с животными, какой вы хотите посмотреть?");
+                Console.WriteLine($"Чтобы выйти нажмите {_aviarys.Count + 1}");
                 string input = Console.ReadLine();
                 int number;
                 int.TryParse(input, out number);
@@ -32,16 +32,16 @@ namespace ConsoleApp1
                 switch (input)
                 {
                     case "1":
-                        _animals[number - 1].ShowInfo();
+                        _aviarys[number - 1].ShowInfo();
                         break;
                     case "2":
-                        _animals[number - 1].ShowInfo();
+                        _aviarys[number - 1].ShowInfo();
                         break;
                     case "3":
-                        _animals[number - 1].ShowInfo();
+                        _aviarys[number - 1].ShowInfo();
                         break;
                     case "4":
-                        _animals[number - 1].ShowInfo();
+                        _aviarys[number - 1].ShowInfo();
                         break;
                     case "5":
                         isWorking = false;
@@ -55,10 +55,10 @@ namespace ConsoleApp1
 
         private void CreateNewAnimals()
         {
-            _animals.Add(new Animal("Лев", "РРРР"));
-            _animals.Add(new Animal("Гусь","Кря"));
-            _animals.Add(new Animal("Крокодил", "Клац-клац"));
-            _animals.Add(new Animal("Лягушка", "Квак"));
+            _aviarys.Add(new Animal("Лев", "РРРР"));
+            _aviarys.Add(new Animal("Гусь","Кря"));
+            _aviarys.Add(new Animal("Крокодил", "Клац-клац"));
+            _aviarys.Add(new Animal("Лягушка", "Квак"));
         }
     }
 
