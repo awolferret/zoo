@@ -12,51 +12,45 @@ namespace ConsoleApp1
         }
     }
 
-    class Zoo
+    class Zoo : Aviary
     {
-        private List<Animal> _aviarys = new List<Animal>();
+        Aviary aviary = new Aviary();
 
         public void Work()
         {
-            CreateNewAnimals();
             bool isWorking = true;
+            CreateNewAnimals();
+            Console.WriteLine($"Добро пажаловать в зоопарк, у нас есть {_aviarys.Count} вальера с животными, какой вы хотите посмотреть?");
 
             while (isWorking)
             {
-                Console.WriteLine($"Добро пажаловать в зоопарк, у нас есть {_aviarys.Count} вальера с животными, какой вы хотите посмотреть?");
                 Console.WriteLine($"Чтобы выйти нажмите {_aviarys.Count + 1}");
                 string input = Console.ReadLine();
                 int number;
-                int.TryParse(input, out number);
 
-                switch (input)
+                if (int.TryParse(input, out number))
                 {
-                    case "1":
-                        _aviarys[number - 1].ShowInfo();
-                        break;
-                    case "2":
-                        _aviarys[number - 1].ShowInfo();
-                        break;
-                    case "3":
-                        _aviarys[number - 1].ShowInfo();
-                        break;
-                    case "4":
-                        _aviarys[number - 1].ShowInfo();
-                        break;
-                    case "5":
-                        isWorking = false;
-                        break;
-                    default:
-                        Console.WriteLine("Ошибка");
-                        break;
+                    if (number > 0 && number <= _aviarys.Count)
+                    {
+                        _aviarys[number-1].ShowInfo();
+                    }
+                }
+                if (number == _aviarys.Count + 1)
+                {
+                    isWorking = false;
                 }
             }
         }
+    }
 
-        private void CreateNewAnimals()
+    class Aviary
+    {
+        protected List<Animal> _aviarys = new List<Animal>();
+
+        protected void CreateNewAnimals()
         {
             _aviarys.Add(new Animal("Лев", "РРРР"));
-            _aviarys.Add(new Animal("Гусь","Кря"));
+            _aviarys.Add(new Animal("Гусь", "Кря"));
             _aviarys.Add(new Animal("Крокодил", "Клац-клац"));
             _aviarys.Add(new Animal("Лягушка", "Квак"));
         }
