@@ -15,7 +15,6 @@ namespace ConsoleApp1
     class Zoo
     {
         private List<Aviary> _aviaries = new List<Aviary>();
-        private int _aviariesAmount;
 
         public void Work()
         {
@@ -33,7 +32,7 @@ namespace ConsoleApp1
                 {
                     if (number > 0 && number <= _aviaries.Count)
                     {
-                        _aviaries[number-1].ShowAviaryInfo();
+                        _aviaries[number-1].ShowAnimalInfo();
                     }
                 }
                 if (number == _aviaries.Count + 1)
@@ -45,9 +44,9 @@ namespace ConsoleApp1
 
         private void CreateAviaries()
         {
-            _aviariesAmount = 4;
+            int aviariesAmount = 4;
 
-            for (int i = 0; i < _aviariesAmount; i++)
+            for (int i = 0; i < aviariesAmount; i++)
             {
                 _aviaries.Add(new Aviary());
             }
@@ -56,19 +55,20 @@ namespace ConsoleApp1
 
     class Aviary
     {
-        private List<Animal> _aviary = new List<Animal>();
-        private int _amount;
+        private List<Animal> _animals = new List<Animal>();
+        private List<Animal> _animalSpecies = new List<Animal>();
 
         public Aviary()
         {
-            CreateAviary();
+            CreateAnimals();
+            AddAnimalsToAviary();
         }
 
-        public void ShowAviaryInfo()
+        public void ShowAnimalInfo()
         {
-            Console.WriteLine ($"В клетке {_aviary.Count} зверей");
+            Console.WriteLine ($"В клетке {_animals.Count} зверей");
 
-            foreach (Animal animal in _aviary)
+            foreach (Animal animal in _animals)
             {
                 Console.WriteLine($"{animal.Name}, пола {animal.Gender}, звук;{animal.Sound}");
             }
@@ -83,37 +83,32 @@ namespace ConsoleApp1
             return index;
         }
 
-        private void CreateAviary()
+        private void AddAnimalsToAviary()
         {
-            _amount = ChooseAmount();
-            int minAmount = 1;
+            int amount = ChooseAmount();
+            int minIndex = 0;
+            int maxIndex = 4;
             Random random = new Random();
-            int index = random.Next(minAmount, _amount);
+            int index = random.Next(minIndex, maxIndex);
 
-            for (int i = 0; i < _amount; i++)
+            for (int i = 0; i < amount; i++)
             {
-                _aviary.Add(GetAnimal(index));
+                _animals.Add(GetAnimal(index));
             
             }
         }
 
+        private void CreateAnimals()
+        {
+            _animalSpecies.Add(new Animal("Лев", "РРРР"));
+            _animalSpecies.Add(new Animal("Гусь", "Кря"));
+            _animalSpecies.Add(new Animal("Крокодил", "Клац-клац"));
+            _animalSpecies.Add(new Animal("Лягушка", "Квак"));
+        }
+
         private Animal GetAnimal(int index)
         {
-            switch (index)
-            {
-                case 1 :
-                    return new Animal("Лев", "РРРР");
-                case 2:
-                    return new Animal("Гусь", "Кря");
-                case 3:
-                    return new Animal("Крокодил", "Клац-клац");
-                case 4:
-                    return new Animal("Лягушка", "Квак");
-                default:
-                    break;
-            }
-
-            return null;
+            return (_animalSpecies[index]);
         }
     }
 
