@@ -12,68 +12,66 @@ namespace ConsoleApp1
         }
     }
 
-    class Zoo : Aviary
+    class Zoo
     {
-        Aviary aviary = new Aviary();
+        private List<Aviary> _aviaries = new List<Aviary>();
+        private int _aviariesAmount;
 
         public void Work()
         {
+            CreateAviaries();
             bool isWorking = true;
-            CreateNewAnimals();
-            Console.WriteLine($"Добро пажаловать в зоопарк, у нас есть {_aviarys.Count} вальера с животными, какой вы хотите посмотреть?");
+            Console.WriteLine($"Добро пажаловать в зоопарк, у нас есть {_aviaries.Count} вальера с животными, какой вы хотите посмотреть?");
 
             while (isWorking)
             {
-                Console.WriteLine($"Чтобы выйти нажмите {_aviarys.Count + 1}");
+                Console.WriteLine($"Чтобы выйти нажмите {_aviaries.Count + 1}");
                 string input = Console.ReadLine();
                 int number;
 
                 if (int.TryParse(input, out number))
                 {
-                    if (number > 0 && number <= _aviarys.Count)
+                    if (number > 0 && number <= _aviaries.Count)
                     {
-                        _aviarys[number-1].ShowInfo();
+                        _aviaries[number-1].ShowAviaryInfo();
                     }
                 }
-                if (number == _aviarys.Count + 1)
+                if (number == _aviaries.Count + 1)
                 {
                     isWorking = false;
                 }
+            }
+        }
+
+        private void CreateAviaries()
+        {
+            _aviariesAmount = 4;
+
+            for (int i = 0; i < _aviariesAmount; i++)
+            {
+                _aviaries.Add(new Aviary());
             }
         }
     }
 
     class Aviary
     {
-        protected List<Animal> _aviarys = new List<Animal>();
+        private List<Animal> _aviary = new List<Animal>();
+        private int _amount;
 
-        protected void CreateNewAnimals()
+        public Aviary()
         {
-            _aviarys.Add(new Animal("Лев", "РРРР"));
-            _aviarys.Add(new Animal("Гусь", "Кря"));
-            _aviarys.Add(new Animal("Крокодил", "Клац-клац"));
-            _aviarys.Add(new Animal("Лягушка", "Квак"));
-        }
-    }
-
-    class Animal
-    {
-        public string Name { get; private set; }
-        public string Gender { get; private set; }
-        public string Sound { get; private set; }
-        public int Amount { get; private set; }
-
-        public Animal(string name,string sound)
-        {
-            Name = name;
-            Gender = ChooseGender();
-            Sound = sound;
-            Amount = ChooseAmount();
+            CreateAviary();
         }
 
-        public void ShowInfo()
+        public void ShowAviaryInfo()
         {
-            Console.WriteLine($"{Name} в колличестве {Amount},пол: {Gender}, звук: {Sound}");
+            Console.WriteLine ($"В клетке {_aviary.Count} зверей");
+
+            foreach (Animal animal in _aviary)
+            {
+                Console.WriteLine($"{animal.Name}, пола {animal.Gender}, звук;{animal.Sound}");
+            }
         }
 
         private int ChooseAmount()
@@ -83,6 +81,53 @@ namespace ConsoleApp1
             int maxAmount = 6;
             int index = random.Next(minAmount, maxAmount);
             return index;
+        }
+
+        private void CreateAviary()
+        {
+            _amount = ChooseAmount();
+            int minAmount = 1;
+            Random random = new Random();
+            int index = random.Next(minAmount, _amount);
+
+            for (int i = 0; i < _amount; i++)
+            {
+                _aviary.Add(GetAnimal(index));
+            
+            }
+        }
+
+        private Animal GetAnimal(int index)
+        {
+            switch (index)
+            {
+                case 1 :
+                    return new Animal("Лев", "РРРР");
+                case 2:
+                    return new Animal("Гусь", "Кря");
+                case 3:
+                    return new Animal("Крокодил", "Клац-клац");
+                case 4:
+                    return new Animal("Лягушка", "Квак");
+                default:
+                    break;
+            }
+
+            return null;
+        }
+    }
+
+    class Animal
+    {
+        public string Name { get; private set; }
+        public string Gender { get; private set; }
+        public string Sound { get; private set; }
+
+        public Animal(string name,string sound)
+        {
+            Name = name;
+            Gender = ChooseGender();
+            Sound = sound;
         }
 
         private string ChooseGender() 
